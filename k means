@@ -1,0 +1,49 @@
+#K-Means Segmentation with explanation
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+# Loading the image:
+# read the image
+image = cv2.imread(r"D:\JAIN_CourseThisSemeven2021\ComputerVision\Pictures\kmeans1.jpg")
+# convert the image into RGB format:
+# convert to RGB
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+# We going to use cv2.kmeans() function which takes a 2D array as input
+# since our original image is 3D (width, height and depth of 3 RGB values), 
+# we need to flatten the height and width into a single vector of pixels (3 RGB values):
+# reshape the image to a 2D array of pixels and 3 color values (RGB)
+pixel_values = image.reshape((-1, 3))
+# convert to float
+pixel_values = np.float32(pixel_values)
+# to print the shape of the resulting pixel values:
+print(pixel_values.shape)
+# the below code define this stopping criteria in OpenCV:
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.2)
+#If you look at the image, there are three main colors (green for trees, blue for the sea/lake and white to orange for the sky). 
+#As a result, we gonna use three clusters for this image:
+# number of clusters (K)
+k = 7
+_, labels, centers = cv2.kmeans(pixel_values, k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+#labels array is the cluster label for each pixel which is either 0, 1 or 2 (since k = 3),
+#centers refers to the center points (each centroid's value).
+#  cv2.KMEANS_RANDOM_CENTERS just indicates OpenCV to randomly assign the values of the clusters initially.
+# we converted the flattened image pixel values to floats, we did that because cv2.kmeans() expects that,
+#let's convert them back to 8-bit pixel values:
+# convert back to 8 bit values
+centers = np.uint8(centers)
+# flatten the labels array
+labels = labels.flatten()
+# Now let's construct the segmented image:
+# convert all pixels to the color of the centroids
+segmented_image = centers[labels.flatten()]
+# Converting back to the original image shape and showing it:
+# reshape back to the original image dimension
+segmented_image = segmented_image.reshape(image.shape)
+# show the image
+plt.imshow(segmented_image)
+plt.show()
+cv2.imshow("original",image)
+cv2.imshow("segmented image", segmented_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
