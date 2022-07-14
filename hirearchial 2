@@ -42,4 +42,4 @@ for l in range(n_clusters):
                 colors=[plt.cm.nipy_spectral(l / float(n_clusters)), ])
 plt.xticks(())
 plt.yticks(())
-plt.show()
+plt.show(),
