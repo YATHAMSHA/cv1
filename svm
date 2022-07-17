@@ -16,4 +16,4 @@ classifier.fit(X_train,y_train)
 y_pred = classifier.predict(X_test)
 print("Classification report for classifier %s:\n%s\n"
       % (classifier, metrics.classification_report(y_test, y_pred)))
-print("Confusion matrix:\n%s" % metrics.confusion_matrix(y_test, y_pred))
+print("Confusion matrix:\n%s" % metrics.confusion_matrix(y_test, y_pred)).
