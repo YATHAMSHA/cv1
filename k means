@@ -21,3 +21,4 @@ cv2.imshow("original",image)
 cv2.imshow("segmented image", segmented_image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
