@@ -44,3 +44,4 @@ import seaborn as sns
 cf_matrix = confusion_matrix(y_test,predictions)
 
 sns.heatmap(cf_matrix, annot=True)
+
